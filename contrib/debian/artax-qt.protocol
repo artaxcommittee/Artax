@@ -1,0 +1,11 @@
+[Protocol]
+exec=artax-qt '%u'
+protocol=artax
+input=none
+output=none
+helper=true
+listing=
+reading=false
+writing=false
+makedir=false
+deleting=false

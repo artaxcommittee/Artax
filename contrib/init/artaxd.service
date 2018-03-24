@@ -1,0 +1,26 @@
+[Unit]
+Description=Artax's distributed currency daemon
+After=network.target
+
+[Service]
+User=artax
+Group=artax
+
+Type=forking
+PIDFile=/var/lib/artaxd/artaxd.pid
+
+ExecStart=/usr/bin/artaxd -daemon -pid=/var/lib/artaxd/artaxd.pid \
+          -conf=/etc/artax/artax.conf -datadir=/var/lib/artaxd
+
+ExecStop=-/usr/bin/artax-cli -conf=/etc/artax/artax.conf \
+         -datadir=/var/lib/artaxd stop
+
+Restart=always
+PrivateTmp=true
+TimeoutStopSec=60s
+TimeoutStartSec=2s
+StartLimitInterval=120s
+StartLimitBurst=5
+
+[Install]
+WantedBy=multi-user.target
