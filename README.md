@@ -23,8 +23,7 @@ Artax is a Powerful Node-Based Pure PoS-based cryptocurrency.
 | Site | link |
 |:-----------|:-----------|
 | Bitcointalk | https://bitcointalk.org/ |
-| Facebook | https://www.facebook.com/ |
-| Twitter | http://twitter.com/ |
+| Twitter | http://twitter.com/ArtaxCoin |
 | Discord | https://discord.gg/btMYs43 |
 | Website | http://www.artaxcoin.org |
 
