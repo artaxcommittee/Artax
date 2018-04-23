@@ -50,11 +50,10 @@ BUILD LINUX
 BUILD WINDOWS
 -------------
 
-1) Download Qt.zip from https://github.com/Artax-Project/Artax/releases/tag/v1.0 and unpack to C:/
 
-2) Download Artax source from https://github.com/Artax-Project/Artax/archive/master.zip 
+1) Download Artax source from https://github.com/Artax-Project/Artax/archive/master.zip 
 
-2.1) Unpack to C:/Artax
+2) Unpack to C:/Artax
 
 3) Install Perl for windows from the homepage http://www.activestate.com/activeperl/downloads
 
