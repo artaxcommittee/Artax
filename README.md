@@ -31,7 +31,7 @@ Artax is a Powerful Node-Based Pure PoS-based cryptocurrency.
 
 BUILD LINUX
 -----------
-1) git clone https://github.com/Artax-Project/Artax
+1) git clone https://www.github.com/artaxcommittee/artax
 
 2) cd Artax 
 
@@ -51,7 +51,7 @@ BUILD WINDOWS
 -------------
 
 
-1) Download Artax source from https://github.com/Artax-Project/Artax/archive/master.zip 
+1) Download Artax source from https://www.github.com/artaxcommittee/artax/archive/master.zip
 
 2) Unpack to C:/Artax
 
