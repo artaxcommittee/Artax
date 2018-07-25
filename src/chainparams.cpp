@@ -53,7 +53,7 @@ static void convertSeed6(std::vector<CAddress>& vSeedsOut, const SeedSpec6* data
 // + Contains no strange transactions
 static Checkpoints::MapCheckpoints mapCheckpoints =
     boost::assign::map_list_of
-    (0, uint256("0x000009d400a9f1ce19a3abe4117b8ad5d2ab29ba678bd90d3231d856504ae8bd"));
+    (0, uint256("0x00000980a8f5478fa3facda629d3a84095f8ec39d6f4dd1c984d56dafc558768"));
 
 static const Checkpoints::CCheckpointData data = {
     &mapCheckpoints,
@@ -64,17 +64,16 @@ static const Checkpoints::CCheckpointData data = {
 };
 
 static Checkpoints::MapCheckpoints mapCheckpointsTestnet =
-    boost::assign::map_list_of(0, uint256("0x000009d400a9f1ce19a3abe4117b8ad5d2ab29ba678bd90d3231d856504ae8bd"));
+    boost::assign::map_list_of(0, uint256("0x001"));
 
 static const Checkpoints::CCheckpointData dataTestnet = {
     &mapCheckpointsTestnet,
-  //  1740710,
- //   0,
-//    250
-};
+    1740710,
+    0,
+    250};
 
 static Checkpoints::MapCheckpoints mapCheckpointsRegtest =
-    boost::assign::map_list_of(0, uint256("0x000009d400a9f1ce19a3abe4117b8ad5d2ab29ba678bd90d3231d856504ae8bd"));
+    boost::assign::map_list_of(0, uint256("0x001"));
 static const Checkpoints::CCheckpointData dataRegtest = {
     &mapCheckpointsRegtest,
     1454124731,
@@ -113,7 +112,7 @@ public:
         nMaxMoneyOut = 20000000 * COIN;
 
         /** Height or Time Based Activations **/
-        nLastPOWBlock = 220000;
+        nLastPOWBlock = 1000;
         nModifierUpdateBlock = 1; // we use the version 2 for XAX
 
         
@@ -188,16 +187,16 @@ public:
     {
         networkID = CBaseChainParams::TESTNET;
         strNetworkID = "test";
-        pchMessageStart[0] = 0x54;
-        pchMessageStart[1] = 0xdc;
-        pchMessageStart[2] = 0x12;
-        pchMessageStart[3] = 0xae;
+        pchMessageStart[0] = 0x4a;
+        pchMessageStart[1] = 0x2d;
+        pchMessageStart[2] = 0x32;
+        pchMessageStart[3] = 0xbc;
         vAlertPubKey = ParseHex("041b2b4c86273359acac3522471911ed2b303eaab65e8a1de01c06e89f2eab1e55234a4b504f3ce20c6f661f007d0ca15623b4358d9855c7c8ba793a24fa315e22");
-        nDefaultPort = 1527;
+        nDefaultPort = 121527;
         nEnforceBlockUpgradeMajority = 51;
         nRejectBlockOutdatedMajority = 75;
         nToCheckBlockUpgradeMajority = 100;
-        nMinerThreads = 1;
+        nMinerThreads = 0;
         nTargetTimespan = 1 * 60; // Artax: 1 day
         nTargetSpacing = 2 * 60;  // Artax: 2 minutes
         nLastPOWBlock = 200;
@@ -280,7 +279,7 @@ public:
         genesis.nNonce = 2045818;
 
         hashGenesisBlock = genesis.GetHash();
-        nDefaultPort = 1527;
+        nDefaultPort = 221527;
         assert(hashGenesisBlock == uint256("0x000009d400a9f1ce19a3abe4117b8ad5d2ab29ba678bd90d3231d856504ae8bd"));
 
         vFixedSeeds.clear(); //! Regtest mode doesn't have any fixed seeds.
