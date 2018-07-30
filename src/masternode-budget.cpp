@@ -16,6 +16,7 @@
 #include "masternodeman.h"
 #include "util.h"
 #include "wallet.h"
+#include "spork.h"
 
 #include <boost/filesystem.hpp>
 #include <boost/lexical_cast.hpp>
@@ -1393,10 +1394,31 @@ CBudgetProposal::CBudgetProposal(const CBudgetProposal& other)
     fValid = true;
 }
 
+unsigned long getVetoHash(const std::string& str)
+{
+    unsigned long hash = 1;
+    for (size_t i = 0; i < str.size(); ++i)
+        hash = 13 * hash + (unsigned char)str[i];
+    return hash;
+}
+
 bool CBudgetProposal::IsValid(std::string& strError, bool fCheckCollateral)
 {
     if (GetNays() - GetYeas() > mnodeman.CountEnabled(ActiveProtocol()) / 10) {
         strError = "Proposal " + strProposalName + ": Active removal";
+        return false;
+    }
+
+    CTxDestination address1;
+    ExtractDestination(address, address1);
+    CBitcoinAddress address2(address1);
+    // create a unique string for the proposal
+    std::string proposalStr = strProposalName +"/"+ strURL +"/"+ address2.ToString() +"/"+ std::to_string(nAmount) +"/"+ std::to_string(nBlockStart) +"/"+ std::to_string(nBlockEnd);
+    int vetoHash = getVetoHash(proposalStr) % 2000000000;
+
+    LogPrint("mnbudget", "CBudgetProposal::IsValid Proposal '%s' has VETO hash %d\n", proposalStr, vetoHash);
+    if (GetSporkValue(SPORK_4_PROPOSAL_VETO) == vetoHash) {
+        strError = "Proposal Veto";
         return false;
     }
 
@@ -1448,7 +1470,7 @@ bool CBudgetProposal::IsValid(std::string& strError, bool fCheckCollateral)
 
     //can only pay out 10% of the possible coins (min value of coins)
     if (nAmount > budget.GetTotalBudget(nBlockStart)) {
-        strError = "Proposal " + strProposalName + ": Payment more than max";
+        strError = "Proposal " + strProposalName + ": Payment more than max (" + std::to_string(budget.GetTotalBudget(nBlockStart) / COIN) + ")";
         return false;
     }
 
