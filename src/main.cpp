@@ -1853,20 +1853,23 @@ bool CheckInputs(const CTransaction& tx, CValidationState& state, const CCoinsVi
         }
 
         if (!tx.IsCoinStake()) {
-            // if (nValueIn < tx.GetValueOut())
-            //     return state.DoS(100, error("CheckInputs() : %s value in (%s) < value out (%s)",
-            //                               tx.GetHash().ToString(), FormatMoney(nValueIn), FormatMoney(tx.GetValueOut())),
-            //         REJECT_INVALID, "bad-txns-in-belowout");
+            if (chainActive.Height() >= 367825) {
+                if (nValueIn < tx.GetValueOut())
+                    return state.DoS(100, error("CheckInputs() : %s value in (%s) < value out (%s)",
+                                        tx.GetHash().ToString(), FormatMoney(nValueIn), FormatMoney(tx.GetValueOut())),
+                        REJECT_INVALID, "bad-txns-in-belowout");
 
-            // Tally transaction fees
-            CAmount nTxFee = nValueIn - tx.GetValueOut();
-            // if (nTxFee < 0)
-            //     return state.DoS(100, error("CheckInputs() : %s nTxFee < 0", tx.GetHash().ToString()),
-            //         REJECT_INVALID, "bad-txns-fee-negative");
-            nFees += nTxFee;
-            // if (!MoneyRange(nFees))
-            //     return state.DoS(100, error("CheckInputs() : nFees out of range"),
-            //         REJECT_INVALID, "bad-txns-fee-outofrange");
+                // Tally transaction fees
+                CAmount nTxFee = nValueIn - tx.GetValueOut();
+                if (nTxFee < 0)
+                    return state.DoS(100, error("CheckInputs() : %s nTxFee < 0", tx.GetHash().ToString()),
+                        REJECT_INVALID, "bad-txns-fee-negative");
+
+                nFees += nTxFee;
+                if (!MoneyRange(nFees))
+                    return state.DoS(100, error("CheckInputs() : nFees out of range"),
+                        REJECT_INVALID, "bad-txns-fee-outofrange");
+            }
         }
         // The first loop above does all the inexpensive checks.
         // Only if ALL inputs pass do we perform expensive ECDSA signature checks.
@@ -5325,19 +5328,9 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv, 
 //       it was the one which was commented out
 int ActiveProtocol()
 {
+    if (IsSporkActive(SPORK_14_NEW_PROTOCOL_ENFORCEMENT))
+        return MIN_PEER_PROTO_VERSION_AFTER_ENFORCEMENT;
 
-    // SPORK_14 was used for 70910. Leave it 'ON' so they don't see > 70910 nodes. They won't react to SPORK_15
-    // messages because it's not in their code
-
-/*    if (IsSporkActive(SPORK_14_NEW_PROTOCOL_ENFORCEMENT))
-            return MIN_PEER_PROTO_VERSION_AFTER_ENFORCEMENT;
-*/
-
-    // SPORK_15 is used for 70911. Nodes < 70911 don't see it and still get their protocol version via SPORK_14 and their
-    // own ModifierUpgradeBlock()
-
-    if (IsSporkActive(SPORK_15_NEW_PROTOCOL_ENFORCEMENT_2))
-            return MIN_PEER_PROTO_VERSION_AFTER_ENFORCEMENT;
     return MIN_PEER_PROTO_VERSION_BEFORE_ENFORCEMENT;
 }
 
