@@ -1,0 +1,11 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Artax
+Comment=Artax P2P Cryptocurrency
+Exec=artax-qt %u
+Terminal=false
+Type=Application
+Icon=artax128
+MimeType=x-scheme-handler/artax;
+Categories=Office;Finance;
+Name[en_US]=artax-qt.desktop
