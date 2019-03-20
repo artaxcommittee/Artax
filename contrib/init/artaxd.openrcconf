@@ -1,0 +1,26 @@
+# /etc/conf.d/artaxd: config file for /etc/init.d/artaxd
+
+# Config file location
+#BITCOIND_CONFIGFILE="/etc/artax/artax.conf"
+
+# What directory to write pidfile to?  (created and owned by $BITCOIND_USER)
+#BITCOIND_PIDDIR="/var/run/artaxd"
+
+# What filename to give the pidfile
+#BITCOIND_PIDFILE="${BITCOIND_PIDDIR}/artaxd.pid"
+
+# Where to write artaxd data (be mindful that the blockchain is large)
+#BITCOIND_DATADIR="/var/lib/artaxd"
+
+# User and group to own artaxd process
+#BITCOIND_USER="artax"
+#BITCOIND_GROUP="artax"
+
+# Path to artaxd executable
+#BITCOIND_BIN="/usr/bin/artaxd"
+
+# Nice value to run artaxd under
+#BITCOIND_NICE=0
+
+# Additional options (avoid -conf and -datadir, use flags above)
+BITCOIND_OPTS=""
